@@ -1,7 +1,8 @@
 from jose import jwt
 from datetime import datetime, timedelta
+import os
 
-SECRET_KEY = "your_secret_key"  
+SECRET_KEY = os.environ.get("SECRET_KEY", "your_secret_key")  # Use environment variable or default value
 
 def encode_token(customer_id):
     payload = {
