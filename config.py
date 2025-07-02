@@ -1,3 +1,5 @@
+import os
+
 class DevelopmentConfig:
     DEBUG = True
     TESTING = False
@@ -17,4 +19,5 @@ class TestingConfig:
 class ProductionConfig:
     DEBUG = False
     TESTING = False
-    DATABASE_URI = 'mysql+mysqlconnector://root:09122020@localhost/mechanic_db'
+    SQLALCHEMY_DATABASE_URI = os.environ.get('SQLALCHEMY_DATABASE_URI')
+    CACHE_TYPE = "SimpleCache"
