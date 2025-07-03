@@ -33,7 +33,7 @@ def create_app(config_class="config.ProductionConfig"):
 
     # Swagger UI setup
     SWAGGER_URL = '/swagger'
-    API_URL = '/static/swagger.yaml'  # Path to your Swagger YAML file
+    API_URL = '/Static/swagger.yaml'  # Path to your Swagger YAML file
     swaggerui_blueprint = get_swaggerui_blueprint(SWAGGER_URL, API_URL)
     app.register_blueprint(swaggerui_blueprint, url_prefix=SWAGGER_URL)
 
