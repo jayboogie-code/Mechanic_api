@@ -1,12 +1,12 @@
 swagger: "2.0"
 info:
   title: "Mechanic API"
-  version: "1.0"
-  description: "API for managing mechanics, customers, service tickets, and inventory."
-host: "localhost:5000"
+  description: "API for managing customers, service tickets, mechanics, and inventory."
+  version: "1.0.0"
+host: "mechanic-api-clul.onrender.com"
 basePath: "/"
 schemes:
-  - "http"
+  - "https"
 securityDefinitions:
   bearerAuth:
     type: apiKey
@@ -46,45 +46,51 @@ paths:
           description: "List of service tickets"
           schema:
             $ref: "#/definitions/ServiceTicketsResponse"
-  /customers/:
+  /customers:
     get:
       tags:
-        - "Customer"
-      summary: "Get Customers with Pagination"
-      description: "Returns a paginated list of customers."
+        - "Customers"
+      summary: "Get all customers"
+      description: "Fetches a paginated list of all customers."
       parameters:
-        - name: "page"
-          in: "query"
+        - in: "query"
+          name: "page"
           required: false
           type: "integer"
-          description: "Page number (default: 1)"
-        - name: "per_page"
-          in: "query"
+          description: "Page number"
+        - in: "query"
+          name: "per_page"
           required: false
           type: "integer"
-          description: "Number of customers per page (default: 10)"
+          description: "Number of customers per page"
       responses:
         200:
-          description: "Paginated list of customers"
+          description: "List of customers"
           schema:
-            $ref: "#/definitions/CustomersResponse"
+            $ref: "#/definitions/CustomerListResponse"
+        500:
+          description: "Internal server error"
   /customers/register:
     post:
       tags:
-        - "Customer"
-      summary: "Register a New Customer"
-      description: "Registers a new customer with the provided details."
+        - "Customers"
+      summary: "Register a new customer"
+      description: "Creates a new customer in the database."
       parameters:
-        - name: "body"
-          in: "body"
+        - in: "body"
+          name: "body"
           required: true
           schema:
-            $ref: "#/definitions/RegisterPayload"
+            $ref: "#/definitions/RegisterCustomerPayload"
       responses:
         201:
           description: "Customer registered successfully"
+          schema:
+            $ref: "#/definitions/CustomerResponse"
         400:
-          description: "Validation errors or email already exists"
+          description: "Validation errors"
+        500:
+          description: "Internal server error"
   /customers/create-ticket:
     post:
       tags:
@@ -431,6 +437,44 @@ definitions:
         type: "string"
       phone:
         type: "string"
+  RegisterCustomerPayload:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+      email:
+        type: "string"
+      password:
+        type: "string"
+      phone:
+        type: "string"
+    required:
+      - "name"
+      - "email"
+      - "password"
+      - "phone"
+  CustomerResponse:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+      name:
+        type: "string"
+      email:
+        type: "string"
+      phone:
+        type: "string"
+  CustomerListResponse:
+    type: "object"
+    properties:
+      customers:
+        type: "array"
+        items:
+          $ref: "#/definitions/CustomerResponse"
+      total:
+        type: "integer"
+      pages:
+        type: "integer"
   CreateTicketPayload:
     type: "object"
     properties:
