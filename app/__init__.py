@@ -12,7 +12,7 @@ import os
 load_dotenv()
 
 def create_app(config_class="config.ProductionConfig"):
-    app = Flask(__name__)
+    app = Flask(__name__, static_folder='static')  # Ensure Flask serves the Static folder
     app.config.from_object(config_class)
   
     # Initialize extensions
@@ -33,7 +33,7 @@ def create_app(config_class="config.ProductionConfig"):
 
     # Swagger UI setup
     SWAGGER_URL = '/swagger'
-    API_URL = '/Static/swagger.yaml'  
+    API_URL = '/static/swagger.yaml'  
     swaggerui_blueprint = get_swaggerui_blueprint(SWAGGER_URL, API_URL)
     app.register_blueprint(swaggerui_blueprint, url_prefix=SWAGGER_URL)
 
