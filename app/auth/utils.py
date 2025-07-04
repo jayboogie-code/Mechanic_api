@@ -1,5 +1,5 @@
 from jose import jwt
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 import os
 
 SECRET_KEY = os.environ.get("SECRET_KEY", "your_secret_key")  # Use environment variable or default value
@@ -7,7 +7,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY", "your_secret_key")  # Use environment 
 def encode_token(customer_id):
     payload = {
         "customer_id": customer_id,
-        "exp": datetime.utcnow() + timedelta(hours=24)  # Token expires in 24 hours
+        "exp": datetime.now(timezone.utc) + timedelta(hours=24)  # Token expires in 24 hours
     }
     return jwt.encode(payload, SECRET_KEY, algorithm="HS256")
 

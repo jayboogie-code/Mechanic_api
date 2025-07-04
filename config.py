@@ -9,10 +9,11 @@ class DevelopmentConfig:
     CACHE_TYPE = "SimpleCache"
     
 class TestingConfig:
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///testing.db'
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'  # Use in-memory SQLite database for testing
     DEBUG = True
     TESTING = True  
     CACHE_TYPE = 'SimpleCache'
+    RATELIMIT_STORAGE_URL = "redis://localhost:6379"  # 
 
 class ProductionConfig:
     DEBUG = False
