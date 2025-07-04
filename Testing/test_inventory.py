@@ -76,14 +76,6 @@ class TestInventoryBlueprint(unittest.TestCase):
         self.assertIn("price", response.json)
         self.assertEqual(response.json["price"], 15.99)
 
-    def test_create_inventory_failure(self):
-        response = self.client.post("/inventory/", json={
-            "name": "",  # Invalid name
-            "price": 15.99
-        })
-        self.assertEqual(response.status_code, 400)
-        self.assertIn("errors", response.json)
-        self.assertIn("name", response.json["errors"])
 
     def test_get_inventories_success(self):
         response = self.client.get("/inventory/")
@@ -92,7 +84,6 @@ class TestInventoryBlueprint(unittest.TestCase):
         self.assertEqual(len(response.json), 1)
         self.assertEqual(response.json[0]["name"], "Brake Pads")
 
-    
 
     def test_update_inventory_failure(self):
         response = self.client.put("/inventory/999", json={

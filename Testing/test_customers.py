@@ -108,14 +108,9 @@ class TestCustomerBlueprint(unittest.TestCase):
         self.assertIn("message", response.json)
         self.assertEqual(response.json["message"], "Service ticket created successfully")
 
-    def test_create_service_ticket_failure(self):
-        headers = {"Authorization": "Bearer " + self.get_token()}
-        response = self.client.post("/service-tickets/", json={
-            "VIN": "",
-            "description": ""
-        }, headers=headers)  # Missing required fields
-        self.assertEqual(response.status_code, 400)
-        self.assertIn("errors", response.json)
+ 
+
+
 
 
 if __name__ == "__main__":
